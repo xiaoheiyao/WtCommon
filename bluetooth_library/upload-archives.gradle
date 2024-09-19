@@ -1,0 +1,82 @@
+// add maven-publish and signing gradle plugin
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+android {
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+// add publish script
+publishing {
+    publications {
+        mavenKotlin(MavenPublication) {
+            groupId = pomGroupId
+            artifactId = pomArtifactId
+            version = pomVersion
+
+            afterEvaluate {
+                from(components["release"])
+            }
+
+            pom {
+                name = 'BluetoothClient'
+                description = 'Android bluetooth client, supports classic bluetooth and low energy bluetooth BLE, supports coroutine flow version'
+                url = 'https://github.com/zhzc0x/BluetoothClient'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'zhzc0x'
+                        name = 'zhangzicheng'
+                        email = 'zhangzicheng2016@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'https://github.com/zhzc0x/BluetoothClient.git'
+                    developerConnection = 'https://github.com/zhzc0x/BluetoothClient.git'
+                    url = 'https://github.com/zhzc0x/BluetoothClient'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = pomVersion.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            def userId = ""
+            def userToken = ""
+            File file = rootProject.file('local.properties')
+            if (file.exists()) {
+                def properties = new Properties()
+                properties.load(rootProject.file('local.properties').newDataInputStream())
+                if (properties.containsKey("userId")) {
+                    userId = properties.getProperty("userId")
+                }
+                if (properties.containsKey("userToken")) {
+                    userToken = properties.getProperty("userToken")
+                }
+            }
+            credentials {
+                username userId // ossrhUsername is your sonatype username
+                password userToken // ossrhUsername is your sonatype password
+            }
+        }
+    }
+}
+
+// signing, this need key, secret, we put it into gradle.properties
+signing {
+    sign publishing.publications.mavenKotlin
+}
