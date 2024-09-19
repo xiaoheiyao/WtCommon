@@ -60,3 +60,5 @@ dependencyResolutionManagement {
 rootProject.name = "WtCommon"
 include(":app")
 include(":commonres")
+include(":bluetooth_library")
+include(":version_check_library")
