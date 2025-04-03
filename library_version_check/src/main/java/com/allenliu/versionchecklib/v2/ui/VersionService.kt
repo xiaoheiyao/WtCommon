@@ -159,7 +159,13 @@ class VersionService : Service() {
             if (isSilentDownload) {
                 showVersionDialog()
             } else {
-                AppUtils.installApk(applicationContext, File(downloadPath), customInstallListener)
+                if (isSkipToDownLoadSuccess) {
+                    AppUtils.installApk(
+                        applicationContext,
+                        File(downloadPath),
+                        customInstallListener
+                    )
+                }
                 BuilderManager.checkForceUpdate()
             }
         }

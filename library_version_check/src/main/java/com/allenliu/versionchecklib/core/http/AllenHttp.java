@@ -9,6 +9,8 @@ import com.allenliu.versionchecklib.v2.builder.RequestVersionBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -35,13 +37,32 @@ import okhttp3.RequestBody;
 public class AllenHttp {
     private static OkHttpClient client;
 
+    private static Proxy proxy;
+
+    /**
+     * 设置代理
+     *
+     * @param url
+     * @param port
+     */
+    public static void setProxy(String url, int port) {
+        if (client != null) {
+            client.dispatcher().cancelAll();
+            client = null; //每次设置代理都清空client
+        }
+        proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(url, port));
+    }
+
     public static OkHttpClient getHttpClient() {
         if (client == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.sslSocketFactory(createSSLSocketFactory(),new TrustAllCerts());
-            builder.connectTimeout(15,TimeUnit.SECONDS);
+            builder.sslSocketFactory(createSSLSocketFactory(), new TrustAllCerts());
+            builder.connectTimeout(15, TimeUnit.SECONDS);
             builder.hostnameVerifier(new TrustAllHostnameVerifier());
-            client=builder.build();
+            if (proxy != null) { //如果代理不为null，就设置代理
+                builder.proxy(proxy);
+            }
+            client = builder.build();
         }
         return client;
     }
@@ -133,6 +154,7 @@ public class AllenHttp {
         }
         return builder;
     }
+
     public static Request.Builder get(RequestVersionBuilder versionParams) {
         Request.Builder builder = new Request.Builder();
         assembleHeader(builder, versionParams);
@@ -163,7 +185,7 @@ public class AllenHttp {
         FormBody.Builder builder = new FormBody.Builder();
         HttpParams params = versionParams.getRequestParams();
         //#https://github.com/AlexLiuSheng/CheckVersionLib/issues/293
-        if(params!=null) {
+        if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 builder.add(entry.getKey(), entry.getValue() + "");
                 ALog.e("params key:" + entry.getKey() + "-----value:" + entry.getValue());

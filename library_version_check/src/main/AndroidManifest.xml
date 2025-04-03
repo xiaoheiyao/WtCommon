@@ -34,7 +34,8 @@
         <service
             android:name=".v2.ui.VersionService"
             android:exported="false"
-            android:priority="1000" />
+            android:priority="1000"
+            android:foregroundServiceType="dataSync"/>
 
         <activity
             android:name=".v2.ui.UIActivity"

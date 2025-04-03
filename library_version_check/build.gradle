@@ -2,13 +2,16 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 //apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 32
+    compileSdk 34
 //    buildToolsVersion "29.0.3"
     resourcePrefix "versionchecklib"
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 34
     }
+
+    //修改aar包名
+    archivesBaseName = "version_check_library_v1.2"
 
     buildTypes {
 
