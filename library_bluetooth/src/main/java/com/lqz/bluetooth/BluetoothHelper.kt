@@ -1,4 +1,4 @@
-package com.zhzc0x.bluetooth
+package com.lqz.bluetooth
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -12,9 +12,8 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Process
 import android.util.Log
-import android.widget.Toast
 import androidx.core.location.LocationManagerCompat
-import com.zhzc0x.bluetooth.client.ClientState
+import com.lqz.bluetooth.client.ClientState
 import java.lang.IllegalArgumentException
 
 internal object BluetoothHelper {

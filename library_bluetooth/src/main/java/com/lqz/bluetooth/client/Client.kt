@@ -1,4 +1,4 @@
-package com.zhzc0x.bluetooth.client
+package com.lqz.bluetooth.client
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter

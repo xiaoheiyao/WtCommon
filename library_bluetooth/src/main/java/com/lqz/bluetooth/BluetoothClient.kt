@@ -1,4 +1,4 @@
-package com.zhzc0x.bluetooth
+package com.lqz.bluetooth
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
@@ -12,18 +12,18 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.annotation.WorkerThread
-import com.zhzc0x.bluetooth.client.BleClient
-import com.zhzc0x.bluetooth.client.ClassicClient
-import com.zhzc0x.bluetooth.client.Client
-import com.zhzc0x.bluetooth.client.ClientState
-import com.zhzc0x.bluetooth.client.ClientType
-import com.zhzc0x.bluetooth.client.ConnectState
+import com.lqz.bluetooth.client.BleClient
+import com.lqz.bluetooth.client.ClassicClient
+import com.lqz.bluetooth.client.Client
+import com.lqz.bluetooth.client.ClientState
+import com.lqz.bluetooth.client.ClientType
+import com.lqz.bluetooth.client.ConnectState
 
-import com.zhzc0x.bluetooth.client.ConnectStateCallback
-import com.zhzc0x.bluetooth.client.Device
-import com.zhzc0x.bluetooth.client.DataResultCallback
-import com.zhzc0x.bluetooth.client.ScanDeviceCallback
-import com.zhzc0x.bluetooth.client.Service
+import com.lqz.bluetooth.client.ConnectStateCallback
+import com.lqz.bluetooth.client.Device
+import com.lqz.bluetooth.client.DataResultCallback
+import com.lqz.bluetooth.client.ScanDeviceCallback
+import com.lqz.bluetooth.client.Service
 import java.lang.IllegalArgumentException
 import java.util.UUID
 
@@ -63,7 +63,7 @@ open class BluetoothClient(private val context: Context, type: ClientType, servi
      * @param toNext: true 如无蓝牙权限则继续请求权限，如设备蓝牙未开启则继续请求打开，如未开启定位开关（Android12以下需要）则前往设置；
      *                false 无操作
      * @return ClientState： NOT_SUPPORT, NO_PERMISSIONS, LOCATION_DISABLE, ENABLE, DISABLE
-     * @see com.zhzc0x.bluetooth.client.ClientState
+     * @see com.lqz.bluetooth.client.ClientState
      * */
     fun checkState(toNext: Boolean = true): ClientState{
         val state = BluetoothHelper.checkState(context, bluetoothAdapter, false)
@@ -116,8 +116,8 @@ open class BluetoothClient(private val context: Context, type: ClientType, servi
      * @param timeMillis：扫描时长
      * @param onEndScan：扫描结束回调
      * @param deviceCallback：ScanDeviceCallback.call(Device):
-     * @See com.zhzc0x.bluetooth.client.Device
-     * @See com.zhzc0x.bluetooth.client.ScanDeviceCallback
+     * @See com.lqz.bluetooth.client.Device
+     * @See com.lqz.bluetooth.client.ScanDeviceCallback
      *
      * */
     @JvmOverloads
@@ -230,14 +230,14 @@ open class BluetoothClient(private val context: Context, type: ClientType, servi
      * 获取支持的 services
      *
      * @return List<Service>
-     * @see com.zhzc0x.bluetooth.client.Service
+     * @see com.lqz.bluetooth.client.Service
      * */
     fun supportedServices() = client.supportedServices()
 
     /**
      * 指定 Service
      * @param service 通过supportedServices()方法返回的Service
-     * @see com.zhzc0x.bluetooth.client.Service
+     * @see com.lqz.bluetooth.client.Service
      *
      * */
     fun assignService(service: Service) = client.assignService(service)
@@ -273,7 +273,7 @@ open class BluetoothClient(private val context: Context, type: ClientType, servi
      * @param timeoutMillis: 发送超时时间，默认3000ms
      * @param resendCount: 失败重发次数，默认3次，0不重发
      * @param callback: 回调发送结果DataResultCallback.call(Boolean,ByteArray)
-     * @see com.zhzc0x.bluetooth.client.DataResultCallback
+     * @see com.lqz.bluetooth.client.DataResultCallback
      *
      * */
     @JvmOverloads
@@ -316,7 +316,7 @@ open class BluetoothClient(private val context: Context, type: ClientType, servi
      * @param timeoutMillis: 读取超时时间，默认3000ms
      * @param rereadCount: 失败重读次数，默认3次，0不重读
      * @param callback: 回调读取结果DataResultCallback.call(Boolean,ByteArray)
-     * @see com.zhzc0x.bluetooth.client.DataResultCallback
+     * @see com.lqz.bluetooth.client.DataResultCallback
      *
      * */
     @JvmOverloads

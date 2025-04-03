@@ -1,10 +1,10 @@
-package com.zhzc0x.bluetooth
+package com.lqz.bluetooth
 
 import android.content.Context
 import android.util.Log
-import com.zhzc0x.bluetooth.client.ClientType
-import com.zhzc0x.bluetooth.client.ConnectState
-import com.zhzc0x.bluetooth.client.Device
+import com.lqz.bluetooth.client.ClientType
+import com.lqz.bluetooth.client.ConnectState
+import com.lqz.bluetooth.client.Device
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.SendChannel
